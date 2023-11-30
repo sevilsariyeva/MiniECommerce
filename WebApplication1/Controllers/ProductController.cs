@@ -98,7 +98,7 @@ namespace WebApplication1.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPut("{id")]
+        [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] ProductExtendDto product)
         {
             try
@@ -119,7 +119,7 @@ namespace WebApplication1.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
+        [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             var item = Products.FirstOrDefault(p => p.Id == id);
