@@ -3,10 +3,14 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace WebApplication1.Migrations
 {
+    /// <inheritdoc />
     public partial class Init : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -70,11 +74,11 @@ namespace WebApplication1.Migrations
                 columns: new[] { "Id", "CustomerId", "OrderDate", "ProductId" },
                 values: new object[,]
                 {
-                    { 1, 1, new DateTime(2023, 12, 1, 0, 51, 52, 589, DateTimeKind.Local).AddTicks(656), 1 },
-                    { 2, 2, new DateTime(2023, 12, 1, 0, 51, 52, 589, DateTimeKind.Local).AddTicks(689), 2 },
-                    { 3, 3, new DateTime(2023, 12, 1, 0, 51, 52, 589, DateTimeKind.Local).AddTicks(693), 3 },
-                    { 4, 4, new DateTime(2023, 12, 1, 0, 51, 52, 589, DateTimeKind.Local).AddTicks(695), 4 },
-                    { 5, 5, new DateTime(2023, 12, 1, 0, 51, 52, 589, DateTimeKind.Local).AddTicks(696), 5 }
+                    { 1, 1, new DateTime(2025, 4, 14, 10, 28, 30, 12, DateTimeKind.Local).AddTicks(9034), 1 },
+                    { 2, 2, new DateTime(2025, 4, 14, 10, 28, 30, 13, DateTimeKind.Local).AddTicks(6793), 2 },
+                    { 3, 3, new DateTime(2025, 4, 14, 10, 28, 30, 13, DateTimeKind.Local).AddTicks(6801), 3 },
+                    { 4, 4, new DateTime(2025, 4, 14, 10, 28, 30, 13, DateTimeKind.Local).AddTicks(6802), 4 },
+                    { 5, 5, new DateTime(2025, 4, 14, 10, 28, 30, 13, DateTimeKind.Local).AddTicks(6803), 5 }
                 });
 
             migrationBuilder.InsertData(
@@ -90,6 +94,7 @@ namespace WebApplication1.Migrations
                 });
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

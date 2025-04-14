@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Dtos;
 using WebApplication1.Entities;
+using WebApplication1.Services.Abstract;
 
 namespace WebApplication1.Controllers
 {
@@ -9,42 +10,16 @@ namespace WebApplication1.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
-        public static List<Customer> Customers { get; set; } = new List<Customer> {
-            new Customer
-            {
-                Id = 1,
-                Name="Jane",
-                Surname="Johnson"
-            },
-              new Customer
-            {
-                Id = 2,
-                Name="Mike",
-                Surname="Black"
-            },
-                new Customer
-            {
-                Id = 3,
-                Name="Lisa",
-                Surname="Kudrow"
-            },
-                  new Customer
-            {
-                Id = 4,
-                Name="Monica",
-                Surname="Geller"
-            },  new Customer
-            {
-                Id = 5,
-                Name="Daniel",
-                Surname="Ronald"
-            }
-        };
+        public readonly ICustomerService _customerService;
 
+        public CustomerController(ICustomerService customerService)
+        {
+            _customerService = customerService;
+        }
         [HttpGet]
         public IEnumerable<Customer> Get()
         {
-            var dataToreturn = Customers.Select(c =>
+            var dataToreturn = _customerService.GetAll().Select(c =>
             {
                 return new Customer
                 {
@@ -59,7 +34,7 @@ namespace WebApplication1.Controllers
         [HttpGet("{id}")]
         public Customer Get(int id)
         {
-            var customer = Customers.FirstOrDefault(c => c.Id == id);
+            var customer = _customerService.GetById(id);
             if (customer != null)
             {
                 var dataToReturn = new Customer
@@ -83,7 +58,7 @@ namespace WebApplication1.Controllers
                     Name = customer.Name,
                     Surname= customer.Surname
                 };
-                Customers.Add(obj);
+                _customerService.Add(obj);
                 return Ok(obj);
             }
             catch (Exception ex)
@@ -96,7 +71,7 @@ namespace WebApplication1.Controllers
         {
             try
             {
-                var item = Customers.FirstOrDefault(c => c.Id == id);
+                var item = _customerService.GetById(id);
                 if (item == null)
                 {
                     return NotFound();
@@ -114,10 +89,10 @@ namespace WebApplication1.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var item = Customers.FirstOrDefault(c => c.Id == id);
+            var item = _customerService.GetById(id);
             if (item != null)
             {
-                Customers.Remove(item);
+                _customerService.Delete(id);
                 return NoContent();
             }
             return NotFound();

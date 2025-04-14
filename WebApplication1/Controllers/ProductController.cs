@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Dtos;
 using WebApplication1.Entities;
+using WebApplication1.Services.Abstract;
 
 namespace WebApplication1.Controllers
 {
@@ -9,47 +10,16 @@ namespace WebApplication1.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        public static List<Product> Products { get; set; } = new List<Product> {
-            new Product
-            {
-                Id = 1,
-                Name="T-Shirt",
-                Price=59,
-                Discount=15
-            },
-              new Product
-            {
-                Id = 2,
-                Name="Trousers",
-                Price=119,
-                Discount=25
-            },
-                new Product
-            {
-                Id = 3,
-                Name="Shirt",
-                Price=89,
-                Discount=5
-            },
-                  new Product
-            {
-                Id = 4,
-                Name="Blouse",
-                Price=69,
-                Discount=35
-            },  new Product
-            {
-                Id = 5,
-                Name="Short",
-                Price=79,
-                Discount=45
-            }
-        };
+        private readonly IProductService _productService;
 
+        public ProductController(IProductService productService)
+        {
+            _productService = productService;
+        }
         [HttpGet]
         public IEnumerable<Product> Get()
         {
-            var dataToreturn = Products.Select(p =>
+            var dataToreturn = _productService.GetAll().Select(p =>
             {
                 return new Product
                 {
@@ -65,7 +35,7 @@ namespace WebApplication1.Controllers
         [HttpGet("{id}")]
         public Product Get(int id)
         {
-            var product = Products.FirstOrDefault(p => p.Id == id);
+            var product = _productService.GetById(id);
             if (product != null)
             {
                 var dataToReturn = new Product
@@ -90,7 +60,7 @@ namespace WebApplication1.Controllers
                     Price = product.Price,
                     Discount = product.Discount
                 };
-                Products.Add(obj);
+                _productService.Add(obj);
                 return Ok(obj);
             }
             catch (Exception ex)
@@ -103,7 +73,7 @@ namespace WebApplication1.Controllers
         {
             try
             {
-                var item = Products.FirstOrDefault(p => p.Id == id);
+                var item = _productService.GetById(id);
                 if (item == null)
                 {
                     return NotFound();
@@ -122,15 +92,14 @@ namespace WebApplication1.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var item = Products.FirstOrDefault(p => p.Id == id);
+            var item = _productService.GetById(id);
             if (item != null)
             {
-                Products.Remove(item);
+                _productService.Delete(id);
                 return NoContent();
             }
             return NotFound();
         }
     }
-
 
 }

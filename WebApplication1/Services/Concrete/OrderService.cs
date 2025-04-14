@@ -30,6 +30,10 @@ namespace WebApplication1.Services.Concrete
         {
             return _orderRepository.Get(expression);
         }
+        public Order GetById(int id)
+        {
+            return _orderRepository.GetById(id);
+        }
 
         public IEnumerable<Order> GetAll()
         {

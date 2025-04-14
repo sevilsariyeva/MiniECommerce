@@ -9,6 +9,10 @@ namespace WebApplication1.Services.Concrete
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
+        public ProductService(IProductRepository productRepository)
+        {
+            _productRepository = productRepository;
+        }
         public void Add(Product entity)
         {
             _productRepository.Add(entity);
@@ -29,7 +33,10 @@ namespace WebApplication1.Services.Concrete
         {
             return _productRepository.GetAll();
         }
-
+        public Product GetById(int id)
+        {
+            return _productRepository.GetById(id);
+        }
         public void Update(Product entity)
         {
             _productRepository.Update(entity);

@@ -12,17 +12,18 @@ using WebApplication1.Data;
 namespace WebApplication1.Migrations
 {
     [DbContext(typeof(MarketDbContext))]
-    [Migration("20231130205152_Init")]
+    [Migration("20250414062832_Init")]
     partial class Init
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.25")
+                .HasAnnotation("ProductVersion", "9.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("WebApplication1.Entities.Customer", b =>
                 {
@@ -30,7 +31,7 @@ namespace WebApplication1.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -81,7 +82,7 @@ namespace WebApplication1.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
@@ -101,35 +102,35 @@ namespace WebApplication1.Migrations
                         {
                             Id = 1,
                             CustomerId = 1,
-                            OrderDate = new DateTime(2023, 12, 1, 0, 51, 52, 589, DateTimeKind.Local).AddTicks(656),
+                            OrderDate = new DateTime(2025, 4, 14, 10, 28, 30, 12, DateTimeKind.Local).AddTicks(9034),
                             ProductId = 1
                         },
                         new
                         {
                             Id = 2,
                             CustomerId = 2,
-                            OrderDate = new DateTime(2023, 12, 1, 0, 51, 52, 589, DateTimeKind.Local).AddTicks(689),
+                            OrderDate = new DateTime(2025, 4, 14, 10, 28, 30, 13, DateTimeKind.Local).AddTicks(6793),
                             ProductId = 2
                         },
                         new
                         {
                             Id = 3,
                             CustomerId = 3,
-                            OrderDate = new DateTime(2023, 12, 1, 0, 51, 52, 589, DateTimeKind.Local).AddTicks(693),
+                            OrderDate = new DateTime(2025, 4, 14, 10, 28, 30, 13, DateTimeKind.Local).AddTicks(6801),
                             ProductId = 3
                         },
                         new
                         {
                             Id = 4,
                             CustomerId = 4,
-                            OrderDate = new DateTime(2023, 12, 1, 0, 51, 52, 589, DateTimeKind.Local).AddTicks(695),
+                            OrderDate = new DateTime(2025, 4, 14, 10, 28, 30, 13, DateTimeKind.Local).AddTicks(6802),
                             ProductId = 4
                         },
                         new
                         {
                             Id = 5,
                             CustomerId = 5,
-                            OrderDate = new DateTime(2023, 12, 1, 0, 51, 52, 589, DateTimeKind.Local).AddTicks(696),
+                            OrderDate = new DateTime(2025, 4, 14, 10, 28, 30, 13, DateTimeKind.Local).AddTicks(6803),
                             ProductId = 5
                         });
                 });
@@ -140,7 +141,7 @@ namespace WebApplication1.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<double>("Discount")
                         .HasColumnType("float");

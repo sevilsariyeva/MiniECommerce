@@ -32,7 +32,10 @@ namespace WebApplication1.Repositories.Concrete
             var product = _context.Products.SingleOrDefault(expression);
             return product;
         }
-
+        public Product GetById(int id)
+        {
+            return _context.Products.FirstOrDefault(p => p.Id == id);
+        }
         public IEnumerable<Product> GetAll()
         {
             var product = _context.Products;

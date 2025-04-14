@@ -29,7 +29,10 @@ namespace WebApplication1.Services.Concrete
         {
             return _customerRepository.Get(expression);
         }
-
+        public Customer GetById(int id)
+        {
+            return _customerRepository.GetById(id);
+        }
         public IEnumerable<Customer> GetAll()
         {
             return _customerRepository.GetAll();

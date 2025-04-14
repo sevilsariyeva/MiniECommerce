@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Dtos;
 using WebApplication1.Entities;
+using WebApplication1.Services.Abstract;
 
 namespace WebApplication1.Controllers
 {
@@ -9,47 +10,15 @@ namespace WebApplication1.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
-        public static List<Order> Orders { get; set; } = new List<Order> {
-            new Order
-            {
-                Id = 1,
-                 ProductId = 1,
-                 CustomerId = 1,
-                 OrderDate = DateTime.Now
-            },
-              new Order
-            {
-                Id = 2,
-                ProductId=2,
-                CustomerId = 2,
-                OrderDate = DateTime.Now
-            },
-                new Order
-            {
-                Id = 3,
-                ProductId=3,
-                CustomerId=3,
-                OrderDate = DateTime.Now
-            },
-                  new Order
-            {
-                Id = 4,
-                ProductId=4,
-                CustomerId=4,
-                OrderDate = DateTime.Now
-            },  new Order
-            {
-                Id = 5,
-                ProductId=5,
-                CustomerId=5,
-                OrderDate = DateTime.Now
-            }
-        };
-
+        private readonly IOrderService _orderService;
+        public OrderController(IOrderService orderService)
+        {
+            _orderService = orderService;
+        }
         [HttpGet]
         public IEnumerable<Order> Get()
         {
-            var dataToreturn = Orders.Select(o =>
+            var dataToreturn = _orderService.GetAll().Select(o =>
             {
                 return new Order
                 {
@@ -64,7 +33,7 @@ namespace WebApplication1.Controllers
         [HttpGet("{id}")]
         public Order Get(int id)
         {
-            var order = Orders.FirstOrDefault(o => o.Id == id);
+            var order = _orderService.GetAll().FirstOrDefault(o => o.Id == id);
             if (order != null)
             {
                 var dataToReturn = new Order
@@ -88,7 +57,7 @@ namespace WebApplication1.Controllers
                     ProductId = order.Id,
                     CustomerId = order.Id
                 };
-                Orders.Add(obj);
+                _orderService.Add(obj);
                 return Ok(obj);
             }
             catch (Exception ex)
@@ -101,7 +70,7 @@ namespace WebApplication1.Controllers
         {
             try
             {
-                var item = Orders.FirstOrDefault(o => o.Id == id);
+                var item = _orderService.GetById(id);
                 if (item == null)
                 {
                     return NotFound();
@@ -120,10 +89,10 @@ namespace WebApplication1.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var item = Orders.FirstOrDefault(o => o.Id == id);
+            var item = _orderService.GetById(id);
             if (item != null)
             {
-                Orders.Remove(item);
+                _orderService.Delete(id);
                 return NoContent();
             }
             return NotFound();

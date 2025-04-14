@@ -30,10 +30,12 @@ namespace WebApplication1.Repositories.Concrete
 
         public Order Get(Expression<Func<Order, bool>> expression)
         {
-            var order = _context.Orders.SingleOrDefault(expression);
-            return order;
+            return _context.Orders.SingleOrDefault(expression);
         }
-
+        public Order GetById(int id)
+        {
+            return _context.Orders.FirstOrDefault(o=>o.Id == id);    
+        }
         public IEnumerable<Order> GetAll()
         {
             var orders = _context.Orders;

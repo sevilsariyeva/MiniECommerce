@@ -31,7 +31,10 @@ namespace WebApplication1.Repositories.Concrete
             var customer = _context.Customers.SingleOrDefault(expression);
             return customer;
         }
-
+        public Customer GetById(int id)
+        {
+            return _context.Customers.FirstOrDefault(c => c.Id == id);
+        }
         public IEnumerable<Customer> GetAll()
         {
             var customers = _context.Customers;
